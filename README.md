@@ -47,3 +47,4 @@ claude
 - **Save** adds a savepoint named after the current time.
 - **Restore** saves a "Before restoring" point, then rolls back to the savepoint you picked. Everything in between is shadowed (shown striped). Restoring to a shadowed savepoint brings it back.
 - The collapse and close buttons in the header do nothing.
+- Your changes are saved in the browser, so they are still there after a refresh. To go back to the example data, run `localStorage.removeItem('history-pane')` in the browser console and refresh.

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import type { SavepointType } from '@/features/BranchHistory/types';
 import type { BranchReset } from './lineage';
 
@@ -47,23 +48,28 @@ const nextAcceptedAt = (lastAcceptedAt: number): number => Math.max(Date.now(), 
 
 const loadedAt = Date.now();
 
-export const useHistoryStore = create<HistoryState>()((set, get) => ({
-  savepoints: createSeedSavepoints(loadedAt),
-  resets: [],
-  lastAcceptedAt: loadedAt,
+/** Saved in the browser's localStorage under this key. Delete it to start again with the example data. */
+const STORAGE_KEY = 'history-pane';
 
-  createSavepoint: ({ type, name }) =>
-    set((state) => {
-      const acceptedAt = nextAcceptedAt(state.lastAcceptedAt);
-      const savepoint: Savepoint = {
-        id: crypto.randomUUID(),
-        name,
-        description: undefined,
-        type,
-        acceptedAt,
-        removed: false,
-      };
-      return { savepoints: [...state.savepoints, savepoint], lastAcceptedAt: acceptedAt };
+export const useHistoryStore = create<HistoryState>()(
+  persist(
+    (set, get) => ({
+      savepoints: createSeedSavepoints(loadedAt),
+      resets: [],
+      lastAcceptedAt: loadedAt,
+
+      createSavepoint: ({ type, name }) =>
+        set((state) => {
+          const acceptedAt = nextAcceptedAt(state.lastAcceptedAt);
+          const savepoint: Savepoint = {
+            id: crypto.randomUUID(),
+            name,
+            description: undefined,
+            type,
+            acceptedAt,
+            removed: false,
+          };
+          return { savepoints: [...state.savepoints, savepoint], lastAcceptedAt: acceptedAt };
     }),
 
   updateSavepoint: (savepointId, { name, description }) =>
@@ -111,4 +117,11 @@ export const useHistoryStore = create<HistoryState>()((set, get) => ({
       lastAcceptedAt: resetAcceptedAt,
     });
   },
-}));
+    }),
+    {
+      name: STORAGE_KEY,
+      storage: createJSONStorage(() => localStorage),
+      partialize: ({ savepoints, resets, lastAcceptedAt }) => ({ savepoints, resets, lastAcceptedAt }),
+    },
+  ),
+);
