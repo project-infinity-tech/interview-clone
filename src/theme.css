@@ -1,0 +1,93 @@
+:root {
+  --font-family-body: 'Inter Tight', Inter, system-ui, sans-serif;
+  --font-family-code: 'Fira Code', ui-monospace, monospace;
+
+  --font-size-xxxs: 0.6rem;
+  --font-size-xxs: 0.625rem;
+  --font-size-xs: 0.7rem;
+  --font-size-sm: 0.75rem;
+  --font-size-md: 0.875rem;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 7px;
+  --radius-xl: 15px;
+  --radius-full: 9999px;
+
+  --spacing-xxxxs: 2px;
+  --spacing-xxxs: 4px;
+  --spacing-xxs: 6px;
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+
+  --duration-fast: 100ms;
+  --duration-medium: 200ms;
+
+  --boxshadow-higher: 0 3px 24px -3px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  --boxshadow-section: 0 0 3px 0 rgba(0, 0, 0, 0.1), 0 0 20px 0 rgba(0, 0, 0, 0.03);
+
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e9e9eb;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+
+  --color-primary-50: #f4fef4;
+  --color-primary-400: #3bb132;
+  --color-primary-500: #099c01;
+  --color-primary-600: #097e00;
+
+  --color-secondary-100: #e1f0fb;
+  --color-secondary-200: #96caef;
+  --color-secondary-700: #004b80;
+
+  --color-danger: #d92d20;
+
+  --color-surface: #ffffff;
+  --color-bg-app: #f8f8f8;
+
+  --color-text-primary: #1c1c1f;
+  --color-text-secondary: #46464d;
+  --color-text-tertiary: #7a7a83;
+  --color-text-disabled: #a1a1aa;
+  --color-field-placeholder: #a1a1aa;
+
+  --color-selection-hover: var(--color-neutral-200);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  padding: var(--spacing-md);
+}
+
+body {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  background: var(--color-bg-app);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}

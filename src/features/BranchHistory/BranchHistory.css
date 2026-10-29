@@ -1,0 +1,318 @@
+/* Content */
+
+.history-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Head of the timeline. The rail starts at the live marker and runs down into the list. */
+.history-spine {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.history-spine-line {
+  position: absolute;
+  left: 15px;
+  /* From the middle of the live marker to where the first row's line picks it up. */
+  top: 20px;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-neutral-300);
+}
+
+.history-current-version {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-height: 40px;
+  padding-right: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.history-current-version-label {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+/* A ring rather than a filled dot, so it reads as "you are here". */
+.history-live-marker {
+  justify-self: start;
+  margin-left: 15.5px;
+  transform: translateX(-50%);
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-primary-400);
+  background: var(--color-surface);
+}
+
+.history-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: var(--spacing-sm);
+}
+
+.savepoint-button-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xxs);
+}
+
+/* Rail */
+
+.rail {
+  position: relative;
+  flex-shrink: 0;
+  grid-column: 1;
+  /* span 2, not 1 / -1, because the row grid is implicit. */
+  grid-row: 1 / span 2;
+}
+
+.rail-line {
+  position: absolute;
+  width: 1px;
+  background: var(--color-neutral-300);
+}
+
+.rail-curve {
+  position: absolute;
+  left: 0;
+  overflow: visible;
+  color: var(--color-neutral-300);
+}
+
+.rail-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passing-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Savepoint node */
+
+.node-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-neutral-300);
+  background: var(--color-surface);
+}
+
+.node-frame.is-shadowed {
+  border-color: var(--color-neutral-200);
+}
+
+.node-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--color-neutral-400);
+}
+
+.node-dot.is-shadowed {
+  background: var(--color-neutral-300);
+}
+
+/* Migration marker */
+
+.migration-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+}
+
+/* The rule the label sits on, across the full width of the list. */
+.migration-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--color-secondary-100);
+}
+
+.migration-label {
+  position: relative;
+  padding: var(--spacing-xxxxs) var(--spacing-xxs);
+  border-radius: var(--radius-full);
+  background: var(--color-secondary-100);
+  color: var(--color-secondary-700);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-xxxs);
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease;
+}
+
+.migration-label:hover {
+  background: var(--color-secondary-200);
+}
+
+/* Savepoint row */
+
+.entry-row {
+  display: grid;
+  /* minmax, not 1fr, so a long name can't widen the track and scroll the list sideways. */
+  grid-template-columns: 40px minmax(0, 1fr);
+  transition: background-color var(--duration-fast) ease;
+}
+
+.entry-row.is-shadowed {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 3px,
+    var(--color-neutral-100) 3px,
+    var(--color-neutral-100) 4px
+  );
+}
+
+.entry-row:hover {
+  background-color: var(--color-selection-hover);
+}
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  position: relative;
+  min-height: 54px;
+  padding: var(--spacing-xxs) var(--spacing-sm) var(--spacing-xxs) 0;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* Stretched over the whole header, so the rename input is not inside a button. */
+.entry-header-toggle {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.entry-fold-out {
+  display: grid;
+  grid-template-rows: 0fr;
+  grid-column: 2;
+  grid-row: 2;
+  min-height: 0;
+  opacity: 0;
+  transition:
+    grid-template-rows var(--duration-medium) ease,
+    opacity var(--duration-medium) ease;
+}
+
+.entry-fold-out.is-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.entry-fold-out-clip {
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--spacing-xxxs) 0 0 var(--spacing-xxxs);
+  margin: calc(-1 * var(--spacing-xxxs)) 0 0 calc(-1 * var(--spacing-xxxs));
+}
+
+.entry-fold-out-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: 0 var(--spacing-sm) var(--spacing-sm) 0;
+}
+
+.entry-description {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.entry-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-xxxs) var(--spacing-xs);
+  margin: 0;
+  font-size: var(--font-size-xs);
+}
+
+.entry-facts dt {
+  color: var(--color-text-tertiary);
+}
+
+.entry-facts dd {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.entry-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.entry-title {
+  position: relative;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.entry-title.is-shadowed {
+  color: var(--color-text-tertiary);
+}
+
+.entry-subtitle {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entry-description-preview {
+  color: var(--color-text-secondary);
+}
+
+/* A fixed width, so the restore buttons line up. */
+.entry-timestamp {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 64px;
+  text-align: right;
+}
+
+.entry-header-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.entry-restore-button {
+  padding: var(--spacing-xxs) var(--spacing-xs);
+  border-radius: var(--radius-lg);
+}

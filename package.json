@@ -1,0 +1,21 @@
+{
+  "name": "history-pane",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot ./index.html",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "^5.9.3"
+  }
+}
