@@ -25,7 +25,7 @@ A small copy of the editor's History pane. The data lives in a Zustand store (`s
 ## Running the app
 
 ```sh
-bun dev              # starts the app at http://localhost:3000
+bun dev              # starts the app and prints its URL
 bun run test         # runs the tests
 bun run typecheck    # checks the types
 ```

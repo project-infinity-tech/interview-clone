@@ -1,7 +1,8 @@
 import index from './index.html';
 
 const server = Bun.serve({
-  port: 3000,
+  // 0 means: use any free port.
+  port: 0,
   routes: {
     '/': index,
     // A pretend analytics server. It accepts anything and says OK.
