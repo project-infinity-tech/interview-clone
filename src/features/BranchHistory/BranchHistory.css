@@ -95,13 +95,6 @@
   justify-content: center;
 }
 
-.passing-rail {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-}
-
 /* Savepoint node */
 
 .node-frame {
@@ -128,45 +121,6 @@
 
 .node-dot.is-shadowed {
   background: var(--color-neutral-300);
-}
-
-/* Migration marker */
-
-.migration-row {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 24px;
-}
-
-/* The rule the label sits on, across the full width of the list. */
-.migration-row::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1px;
-  background: var(--color-secondary-100);
-}
-
-.migration-label {
-  position: relative;
-  padding: var(--spacing-xxxxs) var(--spacing-xxs);
-  border-radius: var(--radius-full);
-  background: var(--color-secondary-100);
-  color: var(--color-secondary-700);
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-xxxs);
-  line-height: 1.2;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color var(--duration-fast) ease;
-}
-
-.migration-label:hover {
-  background: var(--color-secondary-200);
 }
 
 /* Savepoint row */

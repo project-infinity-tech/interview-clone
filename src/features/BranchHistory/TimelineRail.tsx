@@ -105,16 +105,3 @@ export const TimelineRail: FC<TimelineRailProps> = ({ shape, children }) => {
     </div>
   );
 };
-
-/** The rail lines that carry on past a row with no node of its own. */
-export interface PassingLines {
-  trunk: boolean;
-  branch: boolean;
-}
-
-export const PassingRailLines: FC<PassingLines> = ({ trunk, branch }) => (
-  <div className="passing-rail" style={{ width: RAIL_WIDTH }} aria-hidden>
-    {trunk && <Line x={TRUNK_X} top={0} height={FULL_HEIGHT} />}
-    {branch && <Line x={BRANCH_X} top={0} height={FULL_HEIGHT} />}
-  </div>
-);

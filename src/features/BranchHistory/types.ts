@@ -13,14 +13,3 @@ export interface HistoryEntry {
   /** A reset aims at the server-assigned position, so a savepoint is only a target once accepted. */
   isRestorable: boolean;
 }
-
-/** A ScramDB migration that succeeded. Restores leave the database alone, so one is never shadowed. */
-export interface MigrationMarker {
-  migrationId: string;
-  version: number;
-  /** Derived from the server-assigned position the migration landed at on this branch. */
-  appliedAtMs: number;
-}
-
-/** The migrations one marker covers, newest first. Never empty, so a marker always has a version to show. */
-export type MigrationMarkerGroup = [MigrationMarker, ...MigrationMarker[]];

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { MigrationMarker, SavepointType } from '@/features/BranchHistory/types';
+import type { SavepointType } from '@/features/BranchHistory/types';
 import type { BranchReset } from './lineage';
 
 export interface Savepoint {
@@ -15,7 +15,6 @@ export interface Savepoint {
 interface HistoryState {
   savepoints: Savepoint[];
   resets: BranchReset[];
-  migrations: MigrationMarker[];
   lastAcceptedAt: number;
   createSavepoint: (savepoint: { type: SavepointType; name: string }) => void;
   updateSavepoint: (savepointId: string, changes: { name?: string; description?: string | null }) => void;
@@ -51,7 +50,6 @@ const loadedAt = Date.now();
 export const useHistoryStore = create<HistoryState>()((set, get) => ({
   savepoints: createSeedSavepoints(loadedAt),
   resets: [],
-  migrations: [],
   lastAcceptedAt: loadedAt,
 
   createSavepoint: ({ type, name }) =>
